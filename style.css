@@ -69,22 +69,6 @@ body>header {
     overflow: hidden;
 }
 
-footer {
-    justify-content: space-between;
-    vertical-align: center;
-
-}
-
-#socialIcons {
-    display: inline-block;
-    right: var(--spacing-standard);
-}
-
-#githubIcon {
-    inline-size: 50px;
-    block-size: 50px;
-}
-
 #main-header {
     font-family: italianno, cursive;
     font-size: clamp(1rem, 7.25dvw, 2rem);
@@ -323,10 +307,22 @@ hr {
 /* ******** Footer ******** */
 footer {
     min-block-size: 2rem;
+    justify-content: space-between;
+    vertical-align: center;
 }
 
 address p {
     color: white;
+}
+
+#socialIcons {
+    display: inline-block;
+    right: var(--spacing-standard);
+}
+
+#githubIcon {
+    inline-size: 50px;
+    block-size: 50px;
 }
 
 /* ******** Tablet size ******** */
