@@ -216,7 +216,6 @@ section {
     flex-flow: wrap;
     margin: var(--spacing-standard);
     gap: .75rem;
-
 }
 
 .section-title {
@@ -302,7 +301,7 @@ input[type="checkbox"]:checked+.info {
  */
     background-color: var(--accent-light-pink);
 
-    block-size: auto;
+    block-size: fit-content;
 }
 
 caption {
@@ -395,7 +394,7 @@ address p {
 }
 
 /* ******** Computer size ******** */
-/* @media screen and (min-width: 40rem) {
+@media screen and (min-width: 40rem) {
 
 
     nav {
@@ -406,4 +405,4 @@ address p {
         max-inline-size: 1200px;
         margin: auto;
     }
-} */
+}
