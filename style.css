@@ -66,9 +66,21 @@ body>header {
     min-block-size: 50px;
     justify-content: space-between;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
-footer img {
+footer {
+    justify-content: space-between;
+    vertical-align: center;
+
+}
+
+#socialIcons {
+    display: inline-block;
+    right: var(--spacing-standard);
+}
+
+#githubIcon {
     inline-size: 50px;
     block-size: 50px;
 }
@@ -142,13 +154,6 @@ footer img {
     content: '';
     top: 12px;
 }
-
-/* nav {
-    inline-size: 100%;
-    block-size: 100%;
-    position: fixed;
-    overflow: hidden;
-} */
 
 .collapsible-menu {
     display: block;
