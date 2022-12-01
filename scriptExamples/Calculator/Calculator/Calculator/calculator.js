@@ -33,3 +33,21 @@ function squareRoot(num) {
         return Math.sqrt(num);
     }
 }
+
+let btn1 = getElementById("one");
+let btn2 = getElementById("two");
+let btn3 = getElementById("three");
+let btn4 = getElementById("four");
+let btn5 = getElementById("five");
+let btn6 = getElementById("six");
+let btn7 = getElementById("seven");
+let btn8 = getElementById("eight");
+let btn9 = getElementById("nine");
+let btn0 = getElementById("zero");
+let btnPlus = getElementById("add");
+let btnMinus = getElementById("subtract");
+let btnMultiply = getElementById("multiply");
+let btnDivide = getElementById("divide");
+let btnEquals = getElementById("equals");
+let btnSquare = getElementById("square");
+let btnSqrt = getElementById("sqrt");
