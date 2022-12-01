@@ -7,19 +7,23 @@
     box-sizing: inherit;
 }
 
-section {
+body {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr repeat(3, minmax(50px, 75px)) 1fr;
+}
+
+section {
+    grid-column: 2 / 5;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(50px, 75px));
     grid-column-gap: .4rem;
     grid-row-gap: .4rem;
     justify-content: center;
-    grid-auto-flow: column-reverse;
     margin: 2rem;
-    max-block-size: 3rem;
 }
 
 #displayWin {
-    grid-column: 1 / -1;
+    grid-column: 1 / 5;
     grid-row: 1;
     background-color: firebrick;
     border: .3rem solid grey;
@@ -48,8 +52,9 @@ button {
 }
 
 #equals {
-    grid-column: 2/ 4;
-    min-inline-size: 96px;
-    max-inline-size: 148px;
+    grid-column: span 2;
+    max-block-size: 48px;
+    min-inline-size: calc(96px + .4rem);
+    max-inline-size: 150px;
     aspect-ratio: 2/1;
 }
