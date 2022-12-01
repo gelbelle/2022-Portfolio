@@ -1,9 +1,43 @@
-* {
+*,
+*:before,
+*:after {
     margin: 0;
     padding: 0;
-    font-size: 16;
+    font-size: 16px;
+    box-sizing: inherit;
 }
 
 body {
     display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    background-color: aqua;
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+}
+
+#displayWin {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    background-color: firebrick;
+    border: .3rem solid grey;
+    text-align: end;
+}
+
+button {
+    background-color: white;
+    color: darkorange;
+    font-weight: bold;
+    font-size: 1.5rem;
+    min-inline-size: 48px;
+    max-inline-size: 75px;
+    aspect-ratio: 1/1;
+}
+
+#equals {
+    grid-column: 2/ 4;
+    min-inline-size: 96px;
+    max-inline-size: 150px;
+    aspect-ratio: 2/1;
 }
