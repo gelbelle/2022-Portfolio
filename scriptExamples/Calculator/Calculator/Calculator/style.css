@@ -15,14 +15,24 @@ body {
 section {
     grid-column: 2 / 5;
     display: grid;
-    grid-template-columns: repeat(3, minmax(50px, 75px));
+    grid-template-columns: repeat(4, minmax(50px, 75px));
     grid-column-gap: .4rem;
     grid-row-gap: .4rem;
     justify-content: center;
-    margin: 2rem;
+    margin: .5rem;
 }
 
-#displayWin {
+div {
+    background-color: lightseagreen;
+    grid-column: 1 / 5;
+    grid-row: 2;
+}
+
+#display {
+    grid-column: 2 / 5;
+}
+
+#currInput {
     grid-column: 1 / 5;
     grid-row: 1;
     background-color: firebrick;
@@ -30,6 +40,11 @@ section {
     text-align: end;
     min-inline-size: 144px;
     min-block-size: 3rem;
+}
+
+#answer {
+    text-align: right;
+    padding: .2rem;
 }
 
 #displayFont {
