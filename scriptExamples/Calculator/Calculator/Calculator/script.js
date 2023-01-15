@@ -2,19 +2,24 @@
  * This program creates a basic calculator with functional addition, subtraction, multiplication, division, square, and squareroot buttons.
  */
 
-function add(num1, num2) {
+const calcSession = {
+    digits: [],
+    operators: []
+}
+
+const add = (num1, num2) => {
     return String(num1 + num2);
 }
 
-function subtract(num1, num2) {
+const subtract = (num1, num2) => {
     return num1 - num2;
 }
 
-function multiply(num1, num2) {
+const multiply = (num1, num2) => {
     return num1 * num2;
 }
 
-function divide(num1, num2) {
+const divide = (num1, num2) => {
     if (num2 === 0) {
         return "DIV BY 0 ERR";
     } else {
@@ -22,11 +27,11 @@ function divide(num1, num2) {
     }
 }
 
-function square(num) {
+const square = (num) => {
     return Math.pow(num, 2);
 }
 
-function squareRoot(num) {
+const squareRoot = (num) => {
     if (num <= 0) {
         return "NEG SQ RT ERR";
     } else {
@@ -42,18 +47,28 @@ const equals = document.getElementById("equals");
 const operators = document.querySelectorAll(".ops");
 const btns = document.querySelectorAll("button");
 const allBtns = document.getElementById("buttons");
-
-display.value = "0";
+let toCalc = [];
 
 const updateDisplay = (target) => {
-    let opClicked = [...operators].filter(op => op.classList.contains("clicked"));
     let equalsPressed = equals.classList.contains("clicked");
-    if (opClicked.length > 0) {
+    if (opClicked) {
         display.value = target.innerHTML;
     } else {
         display.value = (display.value === "0" || equalsPressed) ? target.innerHTML : display.value + target.innerHTML;
         equals.classList.remove("clicked");
     }
+}
+
+const resetCalc = () => {
+    display.value = "0";
+    equals.classList.remove("clicked");
+    operators.forEach(op => {
+        op.classList.remove("clicked");
+    });
+}
+
+const opClicked = () => {
+    return [...operators].filter(op => op.classList.contains("clicked")).length > 0;
 }
 
 allBtns.addEventListener("click", (evt) => {
@@ -67,30 +82,31 @@ allBtns.addEventListener("click", (evt) => {
 
     if (target.classList.contains("ops")) {
         target.classList.add("clicked");
+        calcSession.digits.push(display.value);
+
         return;
     }
+
+    //TODO decimal not adding if number clicked
     if (target.innerHTML === ".") {
         if (!display.value.includes(target.innerHTML)) display.value += ".";
+        else if (opClicked) display.value = "0.";
     }
 
+    //TODO run operations only when = clicked
     if (target.id === "equals") {
-        if ([...operators].filter(op => op.classList.contains("clicked"))) {
-            operate();
+        calcSession.digits.push(display.value);
+        calcSession.operators = [...operators].filter(op => op.classList.contains("clicked"));
 
-            //TODO Only run if an operator is clicked, currently running if true or false
-            //display.value = getOp(display.value);
-        }
+        console.log(calcSession);
+        //display.value = getOp(display.value);
+
         equals.classList.add("clicked");
-        console.log("Outside if");
+        //console.log("Outside if");
     }
 
-    if (target.id === "clear") {
-        display.value = "0";
-        equals.classList.remove("clicked");
-        operators.forEach(op => {
-            op.classList.remove("clicked");
-        });
-    }
+    if (target.id === "clear") resetCalc();
+
 });
 
 const operate = () => {
@@ -109,6 +125,9 @@ operators.forEach(op => {
 const getOp = (str) => {
     console.log(str);
     let operation = [...str].filter(el => ops.indexOf(el) !== -1);
+    let idx = str.indexOf(str.match(/\d+/));
+    let num1 = str.substring(idx, 1);
+    str.slice(idx, 1);
     console.log(operation);
     switch (operation[0]) {
         case "x":
@@ -127,3 +146,5 @@ const getOp = (str) => {
             return "ERROR";
     }
 }
+
+resetCalc();
