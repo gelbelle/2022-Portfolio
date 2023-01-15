@@ -41,6 +41,24 @@ const clearBtn = document.getElementById("clear");
 const equals = document.getElementById("equals");
 const operators = document.querySelectorAll(".ops");
 const btns = document.querySelectorAll("button");
+const allBtns = document.getElementById("buttons");
+
+allBtns.addEventListener("click", (evt) => {
+    const { target } = evt;
+
+    if (!target.matches("button")) return;
+    else display.value = target.innerHTML;
+
+    if (target.classList.contains("ops")) {
+        console.log("ops", target.innerHTML);
+        return;
+    }
+
+    if (target.id === "clear") {
+        display.value = 0;
+    }
+    //console.log("Number", target.innerHTML);
+});
 
 display.value = "0";
 
@@ -58,7 +76,7 @@ const clearAll = () => {
 
 clearBtn.addEventListener("click", clearAll);
 
-btns.forEach(btn => {
+/* btns.forEach(btn => {
     btn.addEventListener("click", () => {
         if (btn.textContent !== "AC" && btn.textContent != "=") {
             displayContents.push(btn.textContent);
@@ -66,7 +84,7 @@ btns.forEach(btn => {
             display.value += btn.textContent;
         }
     })
-});
+}); */
 
 clearBtn.addEventListener("click", clearAll);
 
