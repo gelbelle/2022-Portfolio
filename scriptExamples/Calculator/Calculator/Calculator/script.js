@@ -47,17 +47,35 @@ allBtns.addEventListener("click", (evt) => {
     const { target } = evt;
 
     if (!target.matches("button")) return;
-    else display.value = target.innerHTML;
+
+    if (target.classList.contains("number")) {
+        console.log(target.innerHTML);
+        let opClicked = [...operators].filter(op => op.classList.contains("clicked"));
+        if (opClicked.length > 0) {
+            display.value = target.innerHTML;
+        } else {
+            display.value = (display.value === "0") ? target.innerHTML : display.value + target.innerHTML;
+        }
+    }
 
     if (target.classList.contains("ops")) {
-        console.log("ops", target.innerHTML);
+        target.classList.add("clicked");
         return;
     }
 
-    if (target.id === "clear") {
-        display.value = 0;
+    if (target.id === "equals") {
+        operators.forEach(op => {
+            op.classList.remove("clicked");
+        });
+        display.value = getOp(display.value);
     }
-    //console.log("Number", target.innerHTML);
+
+    if (target.id === "clear") {
+        display.value = "0";
+        operators.forEach(op => {
+            op.classList.remove("clicked");
+        });
+    }
 });
 
 display.value = "0";
@@ -67,82 +85,24 @@ operators.forEach(op => {
     ops.push(op.textContent);
 });
 
-let displayContents = [];
-
-const clearAll = () => {
-    displayContents = [];
-    display.value = "0";
-}
-
-clearBtn.addEventListener("click", clearAll);
-
-/* btns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        if (btn.textContent !== "AC" && btn.textContent != "=") {
-            displayContents.push(btn.textContent);
-            //console.log(typeof displayContents[0]);
-            display.value += btn.textContent;
-        }
-    })
-}); */
-
-clearBtn.addEventListener("click", clearAll);
-
-const getOp = (num1, num2, op) => {
-    console.log(op[0]);
-
-    switch (op) {
-        case "+":
-            return add(num1, num2);
-        case "-":
-            return subtract(num1, num2);
+const getOp = (str) => {
+    console.log(str);
+    let operation = [...str].filter(el => ops.indexOf(el) !== -1);
+    console.log(operation);
+    switch (operation[0]) {
         case "x":
             return multiply(num1, num2);
         case "&divide;":
             return divide(num1, num2);
-        case "X2":
+        case "+":
             return add(num1, num2);
-        case "&#8730;":
+        case "-":
             return subtract(num1, num2);
+        case "X2":
+            return square(num1);
+        case "&#8730;":
+            return Math.sqrt(num1);
         default:
             return "ERROR";
     }
 }
-
-const calculate = () => {
-    let nums = displayContents.filter(el => el.match(/\d+/g));
-    nums = nums.map(num => Number(num));
-    let operation = displayContents.filter(el => ops.indexOf(el) !== -1);
-    console.log({ nums, operation });
-    for (let i = 0; i < nums.length; i++) {
-        display.value = getOp(nums[i], nums[i + 1], operation[i]);
-    }
-}
-
-equals.addEventListener("click", calculate);
-
-
-
-let btn1 = document.getElementById("one");
-let btn2 = document.getElementById("two");
-let btn3 = document.getElementById("three");
-let btn4 = document.getElementById("four");
-let btn5 = document.getElementById("five");
-let btn6 = document.getElementById("six");
-let btn7 = document.getElementById("seven");
-let btn8 = document.getElementById("eight");
-let btn9 = document.getElementById("nine");
-let btn0 = document.getElementById("zero");
-let btnPlus = document.getElementById("add");
-let btnMinus = document.getElementById("subtract");
-let btnMultiply = document.getElementById("multiply");
-let btnDivide = document.getElementById("divide");
-let btnEquals = document.getElementById("equals");
-let btnSquare = document.getElementById("square");
-let btnSqrt = document.getElementById("sqrt");
-let btnDec = document.getElementById("decimal");
-
-function idButton(btn) {
-    return btn.id;
-}
-
