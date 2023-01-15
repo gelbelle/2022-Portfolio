@@ -65,6 +65,11 @@ button {
     aspect-ratio: 1/1;
 }
 
+button:hover {
+    background-color: #ff8c00;
+    color: white;
+}
+
 .clicked {
     background-color: #FF8C00;
     color: white;
