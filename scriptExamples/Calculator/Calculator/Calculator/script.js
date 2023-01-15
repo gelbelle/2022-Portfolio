@@ -2,18 +2,11 @@
  * This program creates a basic calculator with functional addition, subtraction, multiplication, division, square, and squareroot buttons.
  */
 
-const operation = (btnId) => {
-    switch (btnId) {
-        case "add":
-            add(num1, num2);
-    }
-}
-
 function add(num1, num2) {
-    return num1 + num2;
+    return String(num1 + num2);
 }
 
-function subtraction(num1, num2) {
+function subtract(num1, num2) {
     return num1 - num2;
 }
 
@@ -37,11 +30,11 @@ function squareRoot(num) {
     if (num <= 0) {
         return "NEG SQ RT ERR";
     } else {
-        return Math.sqrt(num);
+        return String(Math.sqrt(num));
     }
 }
 
-const currInput = document.getElementById("currInput");
+const display = document.getElementById("display");
 const answer = document.getElementById("answer");
 const nums = document.querySelectorAll(".num");
 const clearBtn = document.getElementById("clear");
@@ -49,17 +42,18 @@ const equals = document.getElementById("equals");
 const operators = document.querySelectorAll(".ops");
 const btns = document.querySelectorAll("button");
 
+display.value = "0";
+
 let ops = [];
 operators.forEach(op => {
     ops.push(op.textContent);
 });
 
-let inputScreen = [];
+let displayContents = [];
 
 const clearAll = () => {
-    answer.innerHtml = 0;
-    inputScreen = [];
-    currInput.innerHTML = "";
+    displayContents = [];
+    display.value = "0";
 }
 
 clearBtn.addEventListener("click", clearAll);
@@ -67,36 +61,43 @@ clearBtn.addEventListener("click", clearAll);
 btns.forEach(btn => {
     btn.addEventListener("click", () => {
         if (btn.textContent !== "AC" && btn.textContent != "=") {
-        inputScreen.push(btn.textContent);
-        //console.log(typeof inputScreen[0]);
-        currInput.innerHTML += btn.textContent;
-    }
-})
+            displayContents.push(btn.textContent);
+            //console.log(typeof displayContents[0]);
+            display.value += btn.textContent;
+        }
+    })
 });
 
 clearBtn.addEventListener("click", clearAll);
 
-console.log(inputScreen[0]);
-//Array containing numbers on the input screen
-let test = ["4", "+", "6"];
-
 const getOp = (num1, num2, op) => {
+    console.log(op[0]);
+
     switch (op) {
         case "+":
             return add(num1, num2);
         case "-":
             return subtract(num1, num2);
+        case "x":
+            return multiply(num1, num2);
+        case "&divide;":
+            return divide(num1, num2);
+        case "X2":
+            return add(num1, num2);
+        case "&#8730;":
+            return subtract(num1, num2);
+        default:
+            return "ERROR";
     }
 }
 
 const calculate = () => {
-    //console.log({ test });
-    let nums = inputScreen.filter(el => el.match(/\d+/g));
+    let nums = displayContents.filter(el => el.match(/\d+/g));
     nums = nums.map(num => Number(num));
-    let operation = inputScreen.filter(el => ops.indexOf(el) !== -1);
+    let operation = displayContents.filter(el => ops.indexOf(el) !== -1);
     console.log({ nums, operation });
     for (let i = 0; i < nums.length; i++) {
-        answer.innerHTML = getOp(nums[i], nums[i + 1], operation[i]);
+        display.value = getOp(nums[i], nums[i + 1], operation[i]);
     }
 }
 
