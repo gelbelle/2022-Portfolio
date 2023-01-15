@@ -19,14 +19,17 @@ section {
     grid-column-gap: .4rem;
     grid-row-gap: .4rem;
     justify-content: center;
-    margin: .5rem;
 }
 
-div {
+#buttons {
+    margin: .3rem;
+}
+
+/* div {
     background-color: lightseagreen;
     grid-column: 1 / 5;
     grid-row: 2;
-}
+} */
 
 #display {
     grid-column: 2 / 5;
@@ -34,7 +37,7 @@ div {
 
 #currInput {
     grid-column: 1 / 5;
-    grid-row: 1;
+    grid-row: 2;
     background-color: firebrick;
     border: .3rem solid grey;
     text-align: end;
@@ -44,11 +47,15 @@ div {
 
 #answer {
     text-align: right;
-    padding: .2rem;
+    padding: .1rem;
+    background-color: #3A414D;
+    grid-column: 1 / 5;
+    grid-row: 3;
+
 }
 
-#displayFont {
-    background-color: lightseagreen;
+input {
+    color: white;
 }
 
 #top {
