@@ -57,12 +57,17 @@ input {
 
 button {
     background-color: white;
-    color: darkorange;
+    color: #ff8c00;
     font-weight: bold;
     font-size: 1.5rem;
     min-inline-size: 48px;
     max-inline-size: 75px;
     aspect-ratio: 1/1;
+}
+
+.clicked {
+    background-color: "#FF8C00";
+    color: "#000";
 }
 
 #equals {
