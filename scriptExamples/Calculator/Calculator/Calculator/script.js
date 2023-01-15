@@ -43,42 +43,63 @@ const operators = document.querySelectorAll(".ops");
 const btns = document.querySelectorAll("button");
 const allBtns = document.getElementById("buttons");
 
+display.value = "0";
+
+const updateDisplay = (target) => {
+    let opClicked = [...operators].filter(op => op.classList.contains("clicked"));
+    let equalsPressed = equals.classList.contains("clicked");
+    if (opClicked.length > 0) {
+        display.value = target.innerHTML;
+    } else {
+        display.value = (display.value === "0" || equalsPressed) ? target.innerHTML : display.value + target.innerHTML;
+        equals.classList.remove("clicked");
+    }
+}
+
 allBtns.addEventListener("click", (evt) => {
     const { target } = evt;
 
     if (!target.matches("button")) return;
 
     if (target.classList.contains("number")) {
-        console.log(target.innerHTML);
-        let opClicked = [...operators].filter(op => op.classList.contains("clicked"));
-        if (opClicked.length > 0) {
-            display.value = target.innerHTML;
-        } else {
-            display.value = (display.value === "0") ? target.innerHTML : display.value + target.innerHTML;
-        }
+        updateDisplay(target);
     }
 
     if (target.classList.contains("ops")) {
         target.classList.add("clicked");
         return;
     }
+    if (target.innerHTML === ".") {
+        if (!display.value.includes(target.innerHTML)) display.value += ".";
+    }
 
     if (target.id === "equals") {
-        operators.forEach(op => {
-            op.classList.remove("clicked");
-        });
-        display.value = getOp(display.value);
+        if ([...operators].filter(op => op.classList.contains("clicked"))) {
+            operate();
+
+            //TODO Only run if an operator is clicked, currently running if true or false
+            //display.value = getOp(display.value);
+        }
+        equals.classList.add("clicked");
+        console.log("Outside if");
     }
 
     if (target.id === "clear") {
         display.value = "0";
+        equals.classList.remove("clicked");
         operators.forEach(op => {
             op.classList.remove("clicked");
         });
     }
 });
 
-display.value = "0";
+const operate = () => {
+    console.log("In operate");
+    operators.forEach(op => {
+        op.classList.remove("clicked");
+    });
+    display.value = getOp(display.value);
+}
 
 let ops = [];
 operators.forEach(op => {
