@@ -66,8 +66,8 @@ button {
 }
 
 .clicked {
-    background-color: "#FF8C00";
-    color: "#000";
+    background-color: #FF8C00;
+    color: white;
 }
 
 #equals {
