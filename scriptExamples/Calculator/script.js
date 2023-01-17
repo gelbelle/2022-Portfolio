@@ -4,18 +4,23 @@
 
 const calcSession = {
     digits: [],
-    operators: []
+    func: []
 }
 
 const add = (num1, num2) => {
+    console.log(typeof num1, typeof num2);
     return num1 + num2;
 }
 
 const subtract = (num1, num2) => {
+    console.log(typeof num1, typeof num2);
+
     return num1 - num2;
 }
 
 const multiply = (num1, num2) => {
+    console.log(typeof num1, typeof num2);
+
     return num1 * num2;
 }
 
@@ -23,6 +28,8 @@ const divide = (num1, num2) => {
     if (num2 === 0) {
         return "DIV BY 0 ERR";
     } else {
+        console.log(typeof num1, typeof num2);
+
         return num1 / num2;
     }
 }
@@ -32,6 +39,8 @@ const square = (num) => {
 }
 
 const squareRoot = (num) => {
+    console.log(typeof num);
+
     if (num <= 0) {
         return "NEG SQ RT ERR";
     } else {
@@ -48,6 +57,7 @@ const operators = document.querySelectorAll(".ops");
 const btns = document.querySelectorAll("button");
 const allBtns = document.getElementById("buttons");
 let toCalc = [];
+let prevBtn
 
 const updateDisplay = (target) => {
     let equalsPressed = equals.classList.contains("clicked");
@@ -71,57 +81,79 @@ const opClicked = () => {
     return [...operators].filter(op => op.classList.contains("clicked")).length > 0;
 }
 
+const removeTag = (tag) => {
+    tag.forEach(tag => operators.forEach(op => op.classList.remove(tag)));
+}
+
+const oneOp = () => {
+    let numOps = 0;
+    operators.forEach(item => {
+        if (item.classList.contains("current")) numOps++
+    });
+
+    return numOps === 0;
+}
+
+let displayChanged = false;
+display.addEventListener("change", () => { displayChanged = true; });
 allBtns.addEventListener("click", (evt) => {
     const { target } = evt;
     if (!target.matches("button")) return;
 
     if (target.classList.contains("number")) {
         updateDisplay(target);
+        displayChanged = true;
     }
 
     if (target.classList.contains("ops")) {
-        calcSession.digits.push(display.value);
-        if (opClicked()) {
-            operators.forEach(op => {
-                op.classList.remove("clicked");
-            });
-        }
-        target.classList.add("clicked");
-        calcSession.operators.push(target.innerHTML);
+        calcSession.func.push(display.value);
+        if (!oneOp()) {
+            removeTag(["current"]);
+            let idx = calcSession.func.length - 2;
+            calcSession.func.splice(idx);
+        };
+        target.classList.add("current");
 
+        if (opClicked()) removeTag(["clicked"]);
+
+        target.classList.add("clicked");
+        calcSession.func.push(target.innerHTML);
+        displayChanged = false;
         return;
     }
 
+    //TODO fix decimal only works on first entry
     if (target.innerHTML === ".") {
         if (!display.value.includes(target.innerHTML)) updateDisplay(target);
     }
 
-    //TODO run operations only when = clicked
     if (target.id === "equals") {
-        calcSession.digits.push(display.value);
-        calcSession.operators = [...operators].filter(op => op.classList.contains("clicked"));
+        if (displayChanged) calcSession.func.push(display.value);
 
-        console.log(calcSession);
-        //display.value = getOp(display.value);
-
+        if (calcSession.func.length >= 3) display.value = getOp(calcSession.func);
+        else return;
+        removeTag(["clicked", "current"]);
         equals.classList.add("clicked");
-        //console.log("Outside if");
+        calcSession.func = [];
     }
 
     if (target.id === "clear") resetCalc();
+    //console.log(calcSession.func);
 
 });
 
 const operate = (arr, ans = 0) => {
-    let num1 = arr[0];
+    console.log(calcSession.func);
+    let num1 = Number(arr[0]);
     let operation = arr[1];
-    let num2 = arr[2];
+    //console.log({ operation }, "\u221A");
+    let num2 = Number(arr[2]);
 
     switch (operation) {
         case "x":
             ans = multiply(num1, num2);
             break;
-        case "&divide;":
+        case "\xF7":
             ans = divide(num1, num2);
             break;
         case "+":
@@ -130,11 +162,10 @@ const operate = (arr, ans = 0) => {
         case "-":
             ans = subtract(num1, num2);
             break;
-
-        case "X2":
+        case "X<sup>2</sup>":
             ans = square(num1);
             break;
-        case "&#8730;":
+        case "\u221A":
             ans = Math.sqrt(num1);
             break;
         default:
@@ -144,6 +175,7 @@ const operate = (arr, ans = 0) => {
 }
 
 const getOp = (arr, ans = 0) => {
+    console.log(arr);
     if (arr.length >= 3) {
         ans = operate(arr, ans);
         arr.splice(0, 3)
@@ -153,7 +185,7 @@ const getOp = (arr, ans = 0) => {
     return ans;
 }
 
-let test = [4, "+", 5, "-", 2];
+//let test = [4, "+", 5, "-", 2];
 
 resetCalc();
-display.value = getOp(test);
+//display.value = getOp(test);
