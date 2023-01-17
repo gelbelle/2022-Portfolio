@@ -35,7 +35,7 @@ const squareRoot = (num) => {
     if (num <= 0) {
         return "NEG SQ RT ERR";
     } else {
-        return String(Math.sqrt(num));
+        return Math.sqrt(num);
     }
 }
 
