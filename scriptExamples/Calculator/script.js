@@ -71,10 +71,6 @@ const opClicked = () => {
     return [...operators].filter(op => op.classList.contains("clicked")).length > 0;
 }
 
-const handleDecimal = (target) => {
-    if (!display.value.includes(target.innerHTML)) updateDisplay(target);
-}
-
 allBtns.addEventListener("click", (evt) => {
     const { target } = evt;
     if (!target.matches("button")) return;
@@ -97,7 +93,7 @@ allBtns.addEventListener("click", (evt) => {
     }
 
     if (target.innerHTML === ".") {
-        handleDecimal(target);
+        if (!display.value.includes(target.innerHTML)) updateDisplay(target);
     }
 
     //TODO run operations only when = clicked
