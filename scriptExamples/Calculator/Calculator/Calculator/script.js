@@ -91,9 +91,7 @@ allBtns.addEventListener("click", (evt) => {
             });
         }
         target.classList.add("clicked");
-        //console.log(`Pushing ${target.innerHTML}`);
         calcSession.operators.push(target.innerHTML);
-
 
         return;
     }
@@ -154,7 +152,7 @@ const getOp = (arr, ans = 0) => {
         ans = operate(arr, ans);
         arr.splice(0, 3)
         arr.unshift(ans);
-        ans = getOp2(arr, ans);
+        ans = getOp(arr, ans);
     }
     return ans;
 }
@@ -163,6 +161,3 @@ let test = [4, "+", 5, "-", 2];
 
 resetCalc();
 display.value = getOp(test);
-let test2 = [4, "+", 5, "-", 2];
-
-//console.log(`Tested ${getOp(test2)}`);
