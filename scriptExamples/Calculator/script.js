@@ -1,5 +1,8 @@
 /**
- * This program creates a basic calculator with toCalctional addition, subtraction, multiplication, division, square, and squareroot buttons.
+ * This program creates a basic calculator with addition, subtraction, multiplication, division, square, and squareroot functions.
+ * @author Angeleah Hoeppner
+ * @date January 18, 2023
+ * @version 1.0
  */
 
 const add = (num1, num2) => {
@@ -38,7 +41,8 @@ const updateDisplay = (target, calculator) => {
 
     let equalsPressed = equals.classList.contains("clicked");
     if (opClicked(calculator.operators)) {
-        display.value = (calculator.hasDecimal) ? display.value + target.innerHTML : target.innerHTML;
+        display.value = target.innerHTML;
+        removeTag(["clicked"], calculator.operators);
     } else {
         display.value = (display.value === "0" || equalsPressed) ? target.innerHTML : display.value + target.innerHTML;
         equals.classList.remove("clicked");
@@ -91,7 +95,6 @@ const calculate = (calculator, ans = 0) => {
             break;
         case "X<sup>2</sup>":
             calculator.answered = true;
-
             ans = square(num1);
             break;
         case "\u221A":
@@ -173,14 +176,15 @@ const main = () => {
     resetCalc(calcSession.operators);
 
     allBtns.addEventListener("click", (evt) => {
+
         const { target } = evt;
         if (!target.matches("button")) return;
 
-        //TODO not entering double digits after using single operator
         if (target.classList.contains("number")) {
-            console.log(calcSession.answered);
-            if (calcSession.answered) display.value = "";
-            calcSession.answered = false;
+            if (calcSession.answered) {
+                display.value = "";
+                calcSession.answered = false;
+            }
             updateDisplay(target, calcSession);
         }
 
